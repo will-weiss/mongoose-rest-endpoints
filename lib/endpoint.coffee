@@ -235,6 +235,7 @@ class Endpoint
     {queryParams} = @$endpoint.options
     filter = _.chain(req.query)
       .pairs()
+      .filter ([k, v]) -> v? and v isnt ''
       .filter ([k, v]) ->  _.some(queryParams, (q) -> minimatch(k, q))
       .map ([k, v]) ->
         return [k, { $exists: true }] if v is '$exists'
